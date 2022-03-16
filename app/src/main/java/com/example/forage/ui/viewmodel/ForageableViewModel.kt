@@ -15,9 +15,7 @@
  */
 package com.example.forage.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.forage.data.ForageableDao
 import com.example.forage.model.Forageable
 import kotlinx.coroutines.Dispatchers
@@ -35,13 +33,13 @@ import java.util.concurrent.Flow
 class ForageableViewModel(private val forageableDao: ForageableDao): ViewModel() {
 
     // TODO: create a property to set to a list of all forageables from the DAO
-    val allList = forageableDao.getAllForageables()
+    val allForageables = forageableDao.getAllForageables().asLiveData()
 
 
     // TODO : create method that takes id: Long as a parameter and retrieve a Forageable from the
     //  database by id via the DAO.
-    fun getForageable(id:Long): Forageable{
-        return forageableDao.getForageableById(id)
+    fun getForageable(id:Long): LiveData<Forageable> {
+        return forageableDao.getForageableById(id).asLiveData()
     }
 
     fun addForageable(
